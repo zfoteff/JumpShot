@@ -2,7 +2,7 @@ package com.cs312.jumpshot;
 
 public class Event {
 
-    private long id; 
+    private long id;
     String eventName;
     String startTime;
     String location;
