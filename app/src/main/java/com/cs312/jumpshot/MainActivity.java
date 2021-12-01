@@ -3,10 +3,8 @@ package com.cs312.jumpshot;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationCompat;
 
-import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -15,6 +13,7 @@ public class MainActivity extends AppCompatActivity {
 
     static final String CHANNEL_ID = "JumpShot";
     NotificationManager notificationManager;
+    Event testEvent = new Event(1, "Gonzaga v. Duke", "1 pm PST", "McCarthy Athletic Center", "photo");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,8 +28,8 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(MainActivity.this, CHANNEL_ID)
                         .setSmallIcon(R.drawable.stadium)
-                        .setContentTitle("Blank")
-                        .setContentText("Blank")
+                        .setContentTitle("An event is about to start near you!")
+                        .setContentText(testEvent.eventName+" starts at "+testEvent.startTime)
                         .setPriority(NotificationCompat.PRIORITY_DEFAULT);
                 notificationManager.notify(0, notificationBuilder.build());
             }
