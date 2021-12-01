@@ -9,7 +9,6 @@ public class Event {
     String photoFileName;
 
     public Event() {
-
         id = -1;
         eventName = "EMPTY NAME";
         startTime = "EMPTY START";
