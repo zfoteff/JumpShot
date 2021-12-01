@@ -14,7 +14,6 @@
         android:text="@string/subtitle"
         android:textSize="16sp"
         android:textStyle="italic"
-        app:layout_constraintBottom_toTopOf="@+id/addEventButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/appTitle" />
@@ -30,34 +29,20 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button2" />
+        app:layout_constraintTop_toBottomOf="@+id/notificationButton" />
 
     <Button
-        android:id="@+id/addEventButton"
-        android:layout_width="379dp"
-        android:layout_height="wrap_content"
-        android:padding="20dp"
-        android:text="Add an event"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toTopOf="@+id/button"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/subtitle"
-        />
-
-    <Button
-        android:id="@+id/button4"
+        android:id="@+id/photoButton"
         android:layout_width="379dp"
         android:layout_height="wrap_content"
         android:padding="20dp"
         android:text="@string/view_photos"
         android:textSize="20sp"
-        app:layout_constraintBottom_toTopOf="@+id/button2"
+        app:layout_constraintBottom_toTopOf="@+id/notificationButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button" />
+        app:layout_constraintTop_toBottomOf="@+id/mapButton" />
 
     <TextView
         android:id="@+id/appTitle"
@@ -73,19 +58,19 @@
         app:layout_constraintTop_toBottomOf="@+id/imageView" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/mapButton"
         android:layout_width="379dp"
         android:layout_height="wrap_content"
         android:padding="20dp"
         android:text="@string/view_map"
         android:textSize="20sp"
-        app:layout_constraintBottom_toTopOf="@+id/button4"
+        app:layout_constraintBottom_toTopOf="@+id/photoButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/addEventButton" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/notificationButton"
         android:layout_width="379dp"
         android:layout_height="wrap_content"
         android:padding="20dp"
@@ -95,7 +80,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button4" />
+        app:layout_constraintTop_toBottomOf="@+id/photoButton" />
 
     <ImageView
         android:id="@+id/imageView"
