@@ -5,11 +5,10 @@ import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
-<<<<<<< HEAD
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+
 
 import android.app.Activity;
+import android.app.NotificationManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -17,39 +16,33 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-public class MainActivity extends AppCompatActivity {
 
-    ActivityResultLauncher<Intent> launcher;
-=======
+
 import androidx.core.app.NotificationCompat;
 
 import android.app.NotificationChannel;
-import android.app.NotificationManager;
-import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity {
 
+    static final String TAG = "MainActivtyTAG";
     static final String CHANNEL_ID = "JumpShot";
     NotificationManager notificationManager;
     Event testEvent = new Event(1, "Gonzaga v. Duke", "1 pm PST", "McCarthy Athletic Center", "photo");
->>>>>>> facd9912e04ff7b26da8e9a582ac65ed353a8e5d
+    ActivityResultLauncher<Intent> launcher;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-<<<<<<< HEAD
-        Button newEventButton = findViewById(R.id.addEventButton);
-        newEventButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, AddEventActivity.class);
-
-            }
-        });
+//        Button newEventButton = findViewById(R.id.createEventButton);
+//        newEventButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent intent = new Intent(MainActivity.this, AddEventActivity.class);
+//                launcher.launch(intent);
+//            }
+//        });
 
         launcher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
                 new ActivityResultCallback<ActivityResult>() {
@@ -63,7 +56,18 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
 
-=======
+        Button newEventButton = findViewById(R.id.createEventButton);
+        newEventButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.d(TAG, "Making a new event");
+                Intent intent = new Intent(MainActivity.this, AddEventActivity.class);
+
+                launcher.launch(intent);
+            }
+        });
+
+
         openNotificationChannel();
         Button notificationButton = findViewById(R.id.notificationButton);
 
@@ -90,6 +94,6 @@ public class MainActivity extends AppCompatActivity {
             notificationManager = getSystemService(NotificationManager.class);
             notificationManager.createNotificationChannel(channel);
         }
->>>>>>> facd9912e04ff7b26da8e9a582ac65ed353a8e5d
+
     }
 }
