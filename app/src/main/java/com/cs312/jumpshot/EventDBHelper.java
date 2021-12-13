@@ -1,5 +1,6 @@
 package com.cs312.jumpshot;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -15,7 +16,7 @@ public class EventDBHelper extends SQLiteOpenHelper {
     static final String EVENT_TABLE_ID = "_id";
     static final String NAME = "name";
     static final String START_TIME = "startTime";
-    static final String ADDRESS = "address";
+    static final String LOCATION = "address";
     static final String PHOTO_ID = "photoId";
     static final String PHOTO_NAME = "photoName";
 
@@ -32,9 +33,7 @@ public class EventDBHelper extends SQLiteOpenHelper {
                 EVENT_TABLE_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 NAME + " TEXT NOT NULL, "+
                 START_TIME + " TEXT NOT NULL, "+
-                ADDRESS + " TEXT, "+
-                PHOTO_ID + " INTEGER, "+
-                PHOTO_NAME + " TEXT ";
+                LOCATION + " TEXT";
 
         String createEventPhotosTable = "CREATE TABLE "+EVENT_PHOTOS_TABLE+" (" +
                 EVENT_PHOTOS_TABLE_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
@@ -51,4 +50,11 @@ public class EventDBHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {}
+
+    public void insertEvent(Event event) {
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(NAME, event.getEventName());
+        contentValues.put(START_TIME, event.getStartTime());
+        contentValues.put(LOCATION, event.getLocation());
+    }
 }
