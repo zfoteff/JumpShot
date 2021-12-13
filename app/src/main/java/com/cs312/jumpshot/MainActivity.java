@@ -9,8 +9,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
 import android.app.NotificationManager;
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -56,6 +58,25 @@ public class MainActivity extends AppCompatActivity {
                         }
                     }
                 });
+
+        Button cameraButton = findViewById(R.id.photoButton);
+        cameraButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                final int REQUEST_IMAGE_CAPTURE = 1;
+
+                // private void dispatchTakePictureIntent() {
+                Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                try {
+                    startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+                } catch (ActivityNotFoundException e) {
+                    Log.d(TAG, "Camera not accessible");
+                    Toast.makeText(MainActivity.this, "Camera not accessible", Toast.LENGTH_LONG).show();
+                    // display error state to the user
+                }
+                // }
+            }
+        });
 
         Button newEventButton = findViewById(R.id.createEventButton);
         newEventButton.setOnClickListener(new View.OnClickListener() {
