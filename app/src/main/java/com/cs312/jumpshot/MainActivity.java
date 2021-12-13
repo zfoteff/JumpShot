@@ -22,6 +22,9 @@ import androidx.core.app.NotificationCompat;
 
 import android.app.NotificationChannel;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class MainActivity extends AppCompatActivity {
 
     static final String TAG = "MainActivtyTAG";
@@ -29,20 +32,14 @@ public class MainActivity extends AppCompatActivity {
     NotificationManager notificationManager;
     Event testEvent = new Event(1, "Gonzaga v. Duke", "1 pm PST", "McCarthy Athletic Center", "photo");
     ActivityResultLauncher<Intent> launcher;
+    List<Event> eventList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-//        Button newEventButton = findViewById(R.id.createEventButton);
-//        newEventButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Intent intent = new Intent(MainActivity.this, AddEventActivity.class);
-//                launcher.launch(intent);
-//            }
-//        });
+        eventList = new ArrayList<>();
 
         launcher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
                 new ActivityResultCallback<ActivityResult>() {
@@ -52,6 +49,10 @@ public class MainActivity extends AppCompatActivity {
 
                         if (result.getResultCode() == Activity.RESULT_OK) {
                             Toast.makeText(MainActivity.this, "New Event Created", Toast.LENGTH_LONG).show();
+//                            Intent event = result.getData();
+//                            String eventName = event.getStringExtra("newEventName");
+//                            String eventLocation
+
                         }
                     }
                 });
