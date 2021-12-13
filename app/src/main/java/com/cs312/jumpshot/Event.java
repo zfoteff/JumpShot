@@ -18,7 +18,6 @@ public class Event {
     }
 
     public Event(long id, String eventName, String startTime, String location, String photoFileName) {
-
         this.id = id;
         this.eventName = eventName;
         this.startTime = startTime;
