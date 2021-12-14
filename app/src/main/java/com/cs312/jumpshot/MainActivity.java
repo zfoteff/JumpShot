@@ -4,12 +4,14 @@ import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 
 import android.app.Activity;
 import android.app.NotificationManager;
 import android.content.ActivityNotFoundException;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -25,6 +27,8 @@ import android.widget.Toast;
 
 import androidx.core.app.NotificationCompat;
 import androidx.core.content.FileProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.NotificationChannel;
 
@@ -39,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
     NotificationManager notificationManager;
     Event testEvent = new Event(1, "Gonzaga v. Duke", "1 pm PST", "McCarthy Athletic Center", "photo");
     ActivityResultLauncher<Intent> launcher;
+    ActivityResultLauncher<Intent> takePictureLauncher;
     List<Event> eventList;
     public final String APP_TAG = "JumpShot";
     public String photoFileName = "photo.jpg";
@@ -81,6 +86,40 @@ public class MainActivity extends AppCompatActivity {
 
                 });
 
+        takePictureLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
+                new ActivityResultCallback<ActivityResult>() {
+                    @Override
+                    public void onActivityResult(ActivityResult result) {
+                        if (result.getResultCode() == Activity.RESULT_OK) {
+                            // what do we do here?
+                            // 1. show picture the user just took in an ImageView
+                            // 2. save picture the user just took to external storage
+                            // here is an example of (1.)
+                            // Intent data stores the result from our camera app
+                            // there is a bitmap thumbnail of the image the user just took
+                            // we need an ImageView to display it
+                            Intent data = result.getData();
+                            if (data != null) {
+                                Bitmap bitmap = (Bitmap) data.getExtras().get("data");
+                                // TODO: send video to video detail activity
+                                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                                builder.setTitle("Add photo to an event?")
+                                        .setMessage("Would you like to add this photo to an event?")
+                                        .setPositiveButton("Add to event", new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                Toast.makeText(MainActivity.this, "OKAY", Toast.LENGTH_SHORT).show();
+                                                // TODO: ALLOW USER TO PICK EVENT
+
+                                            }
+                                        })
+                                        .setNegativeButton("Dismiss, delete photo", null);
+                                builder.show();
+                            }
+                        }
+                    }
+                });
+
 
         Button cameraButton = findViewById(R.id.photoButton);
         cameraButton.setOnClickListener(new View.OnClickListener() {
@@ -88,17 +127,8 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onClick(View view) {
-                final int REQUEST_IMAGE_CAPTURE = 1;
-
-                Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                try {
-                    startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
-                } catch (ActivityNotFoundException e) {
-                    Log.d(TAG, "No camera access");
-                    // display error state to the user
-                }
-
-
+                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                takePictureLauncher.launch(intent);
             }
         });
 
