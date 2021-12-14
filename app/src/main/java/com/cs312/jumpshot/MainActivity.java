@@ -11,7 +11,10 @@ import android.app.Activity;
 import android.app.NotificationManager;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
@@ -21,9 +24,11 @@ import android.widget.Toast;
 
 
 import androidx.core.app.NotificationCompat;
+import androidx.core.content.FileProvider;
 
 import android.app.NotificationChannel;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,11 +40,16 @@ public class MainActivity extends AppCompatActivity {
     Event testEvent = new Event(1, "Gonzaga v. Duke", "1 pm PST", "McCarthy Athletic Center", "photo");
     ActivityResultLauncher<Intent> launcher;
     List<Event> eventList;
+    public final String APP_TAG = "JumpShot";
+    public String photoFileName = "photo.jpg";
+    File photoFile;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        Log.d(TAG, "onCreate");
 
         eventList = new ArrayList<>();
 
@@ -51,30 +61,44 @@ public class MainActivity extends AppCompatActivity {
 
                         if (result.getResultCode() == Activity.RESULT_OK) {
                             Toast.makeText(MainActivity.this, "New Event Created", Toast.LENGTH_LONG).show();
-//                            Intent event = result.getData();
-//                            String eventName = event.getStringExtra("newEventName");
-//                            String eventLocation
+                            Intent event = result.getData();
+                            String eventName = event.getStringExtra("newEventName");
+                            String eventLocation = event.getStringExtra("newEventLocation");
+                            String eventTime = event.getStringExtra("newEventTime");
+
+                            Event newEvent = new Event(1, eventName, eventLocation, eventTime, "photoFile");
+
+                            openNotificationChannel();
+                            NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(MainActivity.this, CHANNEL_ID)
+                                    .setSmallIcon(R.drawable.stadium)
+                                    .setContentTitle("An event was added to the event list!")
+                                    .setContentText(newEvent.getEventName()+" is located at "+newEvent.getLocation()
+                                    + " and starts at " + newEvent.getStartTime()).setPriority(NotificationCompat.PRIORITY_DEFAULT);
+                            notificationManager.notify(0, notificationBuilder.build());
 
                         }
                     }
+
                 });
+
 
         Button cameraButton = findViewById(R.id.photoButton);
         cameraButton.setOnClickListener(new View.OnClickListener() {
+            // TODO: How to get photo thumbnail and add it to event
+
             @Override
             public void onClick(View view) {
                 final int REQUEST_IMAGE_CAPTURE = 1;
 
-                // private void dispatchTakePictureIntent() {
                 Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                 try {
                     startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
                 } catch (ActivityNotFoundException e) {
-                    Log.d(TAG, "Camera not accessible");
-                    Toast.makeText(MainActivity.this, "Camera not accessible", Toast.LENGTH_LONG).show();
+                    Log.d(TAG, "No camera access");
                     // display error state to the user
                 }
-                // }
+
+
             }
         });
 
@@ -90,21 +114,23 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-        openNotificationChannel();
-        Button notificationButton = findViewById(R.id.notificationButton);
-
-        notificationButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(MainActivity.this, CHANNEL_ID)
-                        .setSmallIcon(R.drawable.stadium)
-                        .setContentTitle("An event is about to start near you!")
-                        .setContentText(testEvent.eventName+" starts at "+testEvent.startTime)
-                        .setPriority(NotificationCompat.PRIORITY_DEFAULT);
-                notificationManager.notify(0, notificationBuilder.build());
-            }
-        });
+//        openNotificationChannel();
+//        Button notificationButton = findViewById(R.id.notificationButton);
+//
+//        notificationButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(MainActivity.this, CHANNEL_ID)
+//                        .setSmallIcon(R.drawable.stadium)
+//                        .setContentTitle("An event is about to start near you!")
+//                        .setContentText(testEvent.eventName+" starts at "+testEvent.startTime)
+//                        .setPriority(NotificationCompat.PRIORITY_DEFAULT);
+//                notificationManager.notify(0, notificationBuilder.build());
+//            }
+//        });
     }
+
+
 
     private void openNotificationChannel() {
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
@@ -118,4 +144,22 @@ public class MainActivity extends AppCompatActivity {
         }
 
     }
+
+
+//
+//    private File getPhotoFileUri(String photoFileName) {
+//
+//        File mediaStorageDir = new File(getExternalFilesDir(Environment.DIRECTORY_PICTURES), APP_TAG);
+//
+//        // Create the storage directory if it does not exist
+//        if (!mediaStorageDir.exists() && !mediaStorageDir.mkdirs()){
+//            Log.d(APP_TAG, "failed to create directory");
+//        }
+//
+//        // Return the file target for the photo based on filename
+//        File file = new File(mediaStorageDir.getPath() + File.separator + photoFileName);
+//
+//        return file;
+//
+//    }
 }
