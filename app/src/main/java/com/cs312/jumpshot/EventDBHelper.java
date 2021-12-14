@@ -2,6 +2,7 @@ package com.cs312.jumpshot;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
@@ -16,12 +17,12 @@ public class EventDBHelper extends SQLiteOpenHelper {
     static final String EVENT_TABLE_ID = "_id";
     static final String NAME = "name";
     static final String START_TIME = "startTime";
-    static final String LOCATION = "address";
-    static final String PHOTO_ID = "photoId";
-    static final String PHOTO_NAME = "photoName";
+    static final String LOCATION = "location";
 
     static final String EVENT_PHOTOS_TABLE = "eventPhotos";
     static final String EVENT_PHOTOS_TABLE_ID = "_id";
+    static final String PHOTO_ID = "photoId";
+    static final String PHOTO_NAME = "photoName";
 
     public EventDBHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -56,5 +57,10 @@ public class EventDBHelper extends SQLiteOpenHelper {
         contentValues.put(NAME, event.getEventName());
         contentValues.put(START_TIME, event.getStartTime());
         contentValues.put(LOCATION, event.getLocation());
+
+        Log.d(TAG, "insertEvent: "+contentValues.toString());
+        SQLiteDatabase db = getWritableDatabase();
+        db.insert(EVENT_TABLE, null, contentValues);
+        db.close();
     }
 }
