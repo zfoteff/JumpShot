@@ -23,7 +23,7 @@ public class AddEventActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_event);
 
-        EditText eventName = findViewById(R.id.eventName);
+        EditText eventName = findViewById(R.id.cardEventName);
         EditText eventLocation = findViewById(R.id.eventLocation);
         EditText eventTime = findViewById(R.id.eventStartTime);
 

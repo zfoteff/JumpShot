@@ -6,7 +6,7 @@
     android:layout_height="match_parent">
 
     <EditText
-        android:id="@+id/eventName"
+        android:id="@+id/cardEventName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -33,9 +33,9 @@
         android:ems="10"
         android:hint="Location"
         android:inputType="textPersonName"
-        app:layout_constraintEnd_toEndOf="@+id/eventName"
-        app:layout_constraintStart_toStartOf="@+id/eventName"
-        app:layout_constraintTop_toBottomOf="@+id/eventName" />
+        app:layout_constraintEnd_toEndOf="@+id/cardEventName"
+        app:layout_constraintStart_toStartOf="@+id/cardEventName"
+        app:layout_constraintTop_toBottomOf="@+id/cardEventName" />
 
     <Button
         android:id="@+id/saveEvent"

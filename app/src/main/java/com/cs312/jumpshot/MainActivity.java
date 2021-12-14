@@ -38,7 +38,7 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    static final String TAG = "MainActivtyTAG";
+    static final String TAG = "MainActivityTAG";
     static final String CHANNEL_ID = "JumpShot";
     NotificationManager notificationManager;
     Event testEvent = new Event(1, "Gonzaga v. Duke", "1 pm PST", "McCarthy Athletic Center", "photo");
