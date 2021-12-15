@@ -37,19 +37,19 @@ public class EventDBHelper extends SQLiteOpenHelper {
                 EVENT_TABLE_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 NAME + " TEXT NOT NULL, "+
                 START_TIME + " TEXT NOT NULL, "+
-                LOCATION + " TEXT";
+                LOCATION + " TEXT)";
 
-        String createEventPhotosTable = "CREATE TABLE "+EVENT_PHOTOS_TABLE+" (" +
-                EVENT_PHOTOS_TABLE_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                "eventName TEXT NOT NULL, " +
-                PHOTO_ID + " INTEGER, "+
-                PHOTO_NAME + " TEXT, "+
-                "FOREIGN KEY eventName REFERENCES "+EVENT_TABLE+"("+EVENT_TABLE_ID+")";
+        //String createEventPhotosTable = "CREATE TABLE "+EVENT_PHOTOS_TABLE+" (" +
+        //        EVENT_PHOTOS_TABLE_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+        //        "eventName TEXT NOT NULL, " +
+         //       PHOTO_ID + " INTEGER, "+
+         //       PHOTO_NAME + " TEXT, "+
+         //       "FOREIGN KEY eventName REFERENCES "+EVENT_TABLE+"("+EVENT_TABLE_ID+"))";
 
         db.execSQL(createEventTable);
         Log.d(TAG, "onCreate: "+createEventTable);
-        db.execSQL(createEventPhotosTable);
-        Log.d(TAG, "onCreate: "+createEventPhotosTable);
+        //db.execSQL(createEventPhotosTable);
+        //Log.d(TAG, "onCreate: "+createEventPhotosTable);
     }
 
     @Override
