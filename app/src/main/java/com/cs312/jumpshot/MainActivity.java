@@ -10,26 +10,19 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
 import android.app.NotificationManager;
-import android.content.ActivityNotFoundException;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 
 
 import androidx.core.app.NotificationCompat;
-import androidx.core.content.FileProvider;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.NotificationChannel;
 
@@ -146,21 +139,18 @@ public class MainActivity extends AppCompatActivity {
 
 
         // TODO: FIX CRASH
-//        Button viewEventButton = findViewById(R.id.mapButton);
-//        viewEventButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Intent intent = new Intent(MainActivity.this, EventBrowserActivity.class);
-//
-//                viewEventLauncher.launch(intent);
-//            }
-//
-//
-//        });
+        Button viewEventButton = findViewById(R.id.viewEventList);
+        viewEventButton.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View view) {
+               Intent intent = new Intent(MainActivity.this, EventBrowserActivity.class);
+
+               viewEventLauncher.launch(intent);
+           }
+        });
 
         Button cameraButton = findViewById(R.id.photoButton);
         cameraButton.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
@@ -181,8 +171,6 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-
-
     private void openNotificationChannel() {
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
             CharSequence name = getString(R.string.channel_name);
@@ -193,8 +181,5 @@ public class MainActivity extends AppCompatActivity {
             notificationManager = getSystemService(NotificationManager.class);
             notificationManager.createNotificationChannel(channel);
         }
-
     }
-
-
 }

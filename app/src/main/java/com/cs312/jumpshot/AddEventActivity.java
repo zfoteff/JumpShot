@@ -14,10 +14,12 @@ import androidx.appcompat.app.AppCompatActivity;
 public class AddEventActivity extends AppCompatActivity {
 
     static final String TAG = "addEventActivity";
+    static EventDBHelper dbHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
+        dbHelper = new EventDBHelper(this);
         Log.d(TAG, "addEventActivity called");
 
         super.onCreate(savedInstanceState);
@@ -29,7 +31,7 @@ public class AddEventActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         if (intent != null) {
-            Toast.makeText(this, "Make a new event!", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, "Made a new event!", Toast.LENGTH_LONG).show();
         }
 
         Button saveButton = findViewById(R.id.saveEvent);
@@ -38,9 +40,13 @@ public class AddEventActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent();
 
-                intent.putExtra("newEventName", eventName.getText().toString());
-                intent.putExtra("newEventLocation", eventLocation.getText().toString());
-                intent.putExtra("newEventTime", eventTime.getText().toString());
+                //  Add event to db
+                Event newEvent = new Event(1, eventName.getText().toString(), eventTime.getText().toString(), eventLocation.getText().toString(), "placeholder");
+                dbHelper.insertEvent(newEvent);
+
+                intent.putExtra("newEventName", newEvent.getEventName());
+                intent.putExtra("newEventLocation", newEvent.getLocation());
+                intent.putExtra("newEventTime", newEvent.getStartTime());
 
                 AddEventActivity.this.setResult(Activity.RESULT_OK, intent);
                 AddEventActivity.this.finish();

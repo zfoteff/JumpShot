@@ -7,6 +7,9 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class EventDBHelper extends SQLiteOpenHelper {
 
     static final String TAG = "DB Calls";
@@ -52,6 +55,17 @@ public class EventDBHelper extends SQLiteOpenHelper {
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {}
 
+    public Cursor getSelectAllEventsCursor() {
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor cursor = db.query(EVENT_TABLE, new String[]{
+                EVENT_TABLE_ID,
+                NAME,
+                START_TIME,
+                LOCATION},
+                null, null, null, null, null);
+        return cursor;
+    }
+
     public void insertEvent(Event event) {
         ContentValues contentValues = new ContentValues();
         contentValues.put(NAME, event.getEventName());
@@ -62,5 +76,18 @@ public class EventDBHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = getWritableDatabase();
         db.insert(EVENT_TABLE, null, contentValues);
         db.close();
+    }
+
+    public List<Event> getEvents() {
+        List<Event> events = new ArrayList<>();
+        Cursor cursor = getSelectAllEventsCursor();
+
+        while (cursor.moveToNext()) {
+            Event event = new Event(cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), "");
+            events.add(event);
+        }
+
+        Log.d(TAG, "getEvents: "+events.toString());
+        return events;
     }
 }

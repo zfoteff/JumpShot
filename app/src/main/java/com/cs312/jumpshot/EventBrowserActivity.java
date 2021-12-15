@@ -23,7 +23,6 @@ public class EventBrowserActivity extends AppCompatActivity {
     static final String TAG = "EventBrowser";
     private EventDBHelper dbHelper = new EventDBHelper(EventBrowserActivity.this);
     private RecyclerView recyclerView;
-    private Button openMapView;
     private List<Event> eventList;
     CustomAdaptor adaptor;
 
@@ -32,7 +31,6 @@ public class EventBrowserActivity extends AppCompatActivity {
         Log.d(TAG, "onCreate called for EventBrowser Activity: ");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.event_browser);
-        openMapView = (Button) findViewById(R.id.mapButton);
         recyclerView = (RecyclerView) findViewById(R.id.eventList);
         eventList = new ArrayList<>();
 
@@ -41,6 +39,7 @@ public class EventBrowserActivity extends AppCompatActivity {
         adaptor = new CustomAdaptor();
         recyclerView.setAdapter(adaptor);
 
+        Button openMapView = findViewById(R.id.openInMap);
         openMapView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
