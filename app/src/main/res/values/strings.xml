@@ -3,8 +3,8 @@
     <string name="jumpshot">JumpShot</string>
     <string name="created_by_macy_ryan_and_zac_foteff">Created by: Macy Ryan and Zac Foteff</string>
     <string name="subtitle">Fan created highlight reels</string>
-    <string name="view_photos">View My Photos</string>
-    <string name="view_map">View Event Map</string>
+    <string name="view_photos">Take a photo!</string>
+    <string name="view_map">View Event List</string>
     <string name="settings">Send a notification!</string>
     <string name="channel_name">JumpShot</string>
     <string name="channel_desc">Notification Channel for the JumpShot app</string>

@@ -21,6 +21,7 @@ import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 
@@ -32,6 +33,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.NotificationChannel;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -44,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
     Event testEvent = new Event(1, "Gonzaga v. Duke", "1 pm PST", "McCarthy Athletic Center", "photo");
     ActivityResultLauncher<Intent> launcher;
     ActivityResultLauncher<Intent> takePictureLauncher;
+    ActivityResultLauncher<Intent> viewEventLauncher;
     List<Event> eventList;
     public final String APP_TAG = "JumpShot";
     public String photoFileName = "photo.jpg";
@@ -101,15 +104,26 @@ public class MainActivity extends AppCompatActivity {
                             Intent data = result.getData();
                             if (data != null) {
                                 Bitmap bitmap = (Bitmap) data.getExtras().get("data");
-                                // TODO: send video to video detail activity
+
+                                // TODO: send photo to event detail activity
                                 AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
                                 builder.setTitle("Add photo to an event?")
                                         .setMessage("Would you like to add this photo to an event?")
                                         .setPositiveButton("Add to event", new DialogInterface.OnClickListener() {
                                             @Override
                                             public void onClick(DialogInterface dialog, int which) {
-                                                Toast.makeText(MainActivity.this, "OKAY", Toast.LENGTH_SHORT).show();
+
                                                 // TODO: ALLOW USER TO PICK EVENT
+
+                                                // displaying photo
+                                                ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                                                bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+                                                byte[] byteArray = stream.toByteArray();
+
+                                                Intent intent = new Intent(MainActivity.this, photoDisplayActivity.class);
+                                                intent.putExtra("photo", byteArray);
+                                                viewEventLauncher.launch(intent);
+
 
                                             }
                                         })
@@ -120,10 +134,32 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
 
+        viewEventLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
+                new ActivityResultCallback<ActivityResult>() {
+                    @Override
+                    public void onActivityResult(ActivityResult result) {
+                        if (result.getResultCode() == Activity.RESULT_OK) {
+
+                        }
+                    }
+                });
+
+
+        // TODO: FIX CRASH
+//        Button viewEventButton = findViewById(R.id.mapButton);
+//        viewEventButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Intent intent = new Intent(MainActivity.this, EventBrowserActivity.class);
+//
+//                viewEventLauncher.launch(intent);
+//            }
+//
+//
+//        });
 
         Button cameraButton = findViewById(R.id.photoButton);
         cameraButton.setOnClickListener(new View.OnClickListener() {
-            // TODO: How to get photo thumbnail and add it to event
 
             @Override
             public void onClick(View view) {
@@ -143,21 +179,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
-//        openNotificationChannel();
-//        Button notificationButton = findViewById(R.id.notificationButton);
-//
-//        notificationButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(MainActivity.this, CHANNEL_ID)
-//                        .setSmallIcon(R.drawable.stadium)
-//                        .setContentTitle("An event is about to start near you!")
-//                        .setContentText(testEvent.eventName+" starts at "+testEvent.startTime)
-//                        .setPriority(NotificationCompat.PRIORITY_DEFAULT);
-//                notificationManager.notify(0, notificationBuilder.build());
-//            }
-//        });
     }
 
 
@@ -176,20 +197,4 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-//
-//    private File getPhotoFileUri(String photoFileName) {
-//
-//        File mediaStorageDir = new File(getExternalFilesDir(Environment.DIRECTORY_PICTURES), APP_TAG);
-//
-//        // Create the storage directory if it does not exist
-//        if (!mediaStorageDir.exists() && !mediaStorageDir.mkdirs()){
-//            Log.d(APP_TAG, "failed to create directory");
-//        }
-//
-//        // Return the file target for the photo based on filename
-//        File file = new File(mediaStorageDir.getPath() + File.separator + photoFileName);
-//
-//        return file;
-//
-//    }
 }
