@@ -1,5 +1,9 @@
 package com.cs312.jumpshot;
 
+import android.graphics.Bitmap;
+
+import java.util.ArrayList;
+
 public class Event {
 
     private long id;
@@ -7,6 +11,7 @@ public class Event {
     String startTime;
     String location;
     String photoFileName;
+    ArrayList<Bitmap> bitmapArray;
 
     public Event() {
         id = -1;
@@ -14,6 +19,7 @@ public class Event {
         startTime = "EMPTY START";
         location = "EMPTY LOCATION";
         photoFileName = "placeholderimage";
+        bitmapArray = new ArrayList<Bitmap>();
 
     }
 
@@ -44,6 +50,8 @@ public class Event {
         return photoFileName;
     }
     public void setPhotoFileName(String newPhotoFileName) { photoFileName = newPhotoFileName; }
+    public void addToBitmapArray(Bitmap bitmap) { bitmapArray.add(bitmap); }
+    public ArrayList<Bitmap> getBitmapArray() { return bitmapArray; }
 
     @Override
     public String toString() { return "Event Name: " + eventName + ", Start Time: " + startTime +

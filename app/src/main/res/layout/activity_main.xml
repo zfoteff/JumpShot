@@ -13,7 +13,7 @@
         android:padding="20dp"
         android:text="@string/create_event"
         android:textSize="20sp"
-        app:layout_constraintBottom_toTopOf="@+id/notificationButton"
+        app:layout_constraintBottom_toTopOf="@+id/appRights"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
@@ -45,7 +45,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/notificationButton" />
+        app:layout_constraintTop_toBottomOf="@+id/createEventButton" />
 
     <Button
         android:id="@+id/photoButton"
@@ -86,18 +86,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/photoButton" />
 
-    <Button
-        android:id="@+id/notificationButton"
-        android:layout_width="379dp"
-        android:layout_height="wrap_content"
-        android:padding="20dp"
-        android:text="@string/settings"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toTopOf="@+id/appRights"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/createEventButton" />
 
     <ImageView
         android:id="@+id/imageView"

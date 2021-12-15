@@ -15,7 +15,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.JumpShot">
         <activity
-            android:name=".photoDisplayActivity"
+            android:name=".eventDetailActivity"
             android:exported="true" />
         <activity
             android:name=".AddEventActivity"

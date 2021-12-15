@@ -108,12 +108,14 @@ public class MainActivity extends AppCompatActivity {
 
                                                 // TODO: ALLOW USER TO PICK EVENT
 
+
+
                                                 // displaying photo
                                                 ByteArrayOutputStream stream = new ByteArrayOutputStream();
                                                 bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
                                                 byte[] byteArray = stream.toByteArray();
 
-                                                Intent intent = new Intent(MainActivity.this, photoDisplayActivity.class);
+                                                Intent intent = new Intent(MainActivity.this, eventDetailActivity.class);
                                                 intent.putExtra("photo", byteArray);
                                                 viewEventLauncher.launch(intent);
 
@@ -138,7 +140,6 @@ public class MainActivity extends AppCompatActivity {
                 });
 
 
-        // TODO: FIX CRASH
         Button viewEventButton = findViewById(R.id.viewEventList);
         viewEventButton.setOnClickListener(new View.OnClickListener() {
            @Override
