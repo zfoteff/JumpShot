@@ -21,7 +21,7 @@ import java.util.List;
 
 public class EventBrowserActivity extends AppCompatActivity {
     static final String TAG = "EventBrowser";
-    private EventDBHelper dbHelper = new EventDBHelper(EventBrowserActivity.this);
+    private EventDBHelper dbHelper;
     private RecyclerView recyclerView;
     private List<Event> eventList;
     CustomAdaptor adaptor;
@@ -33,6 +33,8 @@ public class EventBrowserActivity extends AppCompatActivity {
         setContentView(R.layout.event_browser);
         recyclerView = (RecyclerView) findViewById(R.id.eventList);
         eventList = new ArrayList<>();
+        dbHelper = new EventDBHelper(EventBrowserActivity.this);
+        eventList = dbHelper.getEvents();
 
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
