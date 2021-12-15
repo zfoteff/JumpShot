@@ -40,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
     ActivityResultLauncher<Intent> launcher;
     ActivityResultLauncher<Intent> takePictureLauncher;
     ActivityResultLauncher<Intent> viewEventLauncher;
+    ActivityResultLauncher<Intent> pickEventLauncher;
     List<Event> eventList;
     public final String APP_TAG = "JumpShot";
     public String photoFileName = "photo.jpg";
@@ -109,15 +110,15 @@ public class MainActivity extends AppCompatActivity {
                                                 // TODO: ALLOW USER TO PICK EVENT
 
 
-
                                                 // displaying photo
                                                 ByteArrayOutputStream stream = new ByteArrayOutputStream();
                                                 bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
                                                 byte[] byteArray = stream.toByteArray();
 
-                                                Intent intent = new Intent(MainActivity.this, eventDetailActivity.class);
+                                                Intent intent = new Intent(MainActivity.this, EventBrowserActivity.class);
+                                                intent.putExtra("from", "notMain");
                                                 intent.putExtra("photo", byteArray);
-                                                viewEventLauncher.launch(intent);
+                                                pickEventLauncher.launch(intent);
 
 
                                             }
@@ -125,6 +126,16 @@ public class MainActivity extends AppCompatActivity {
                                         .setNegativeButton("Dismiss, delete photo", null);
                                 builder.show();
                             }
+                        }
+                    }
+                });
+
+        pickEventLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
+                new ActivityResultCallback<ActivityResult>() {
+                    @Override
+                    public void onActivityResult(ActivityResult result) {
+                        if (result.getResultCode() == Activity.RESULT_OK) {
+                            Log.d(TAG, "OKAY"); 
                         }
                     }
                 });
@@ -145,7 +156,6 @@ public class MainActivity extends AppCompatActivity {
            @Override
            public void onClick(View view) {
                Intent intent = new Intent(MainActivity.this, EventBrowserActivity.class);
-
                viewEventLauncher.launch(intent);
            }
         });
